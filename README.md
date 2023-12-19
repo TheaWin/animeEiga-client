@@ -2,7 +2,7 @@
 
 Using React, build the client-side for an app called myFlix based on its existing server-side code (REST API and database).
 
-#Features
+# Features
 
 - List of movies
 - Search function
@@ -11,7 +11,7 @@ Using React, build the client-side for an app called myFlix based on its existin
 - Movie details
 - Profile edit
 
-#Technical Requirements
+# Technical Requirements
 
 - The application must be a single-page application(SPA) 
 * The application must use state routing to navigatebetween views and share URLs 
