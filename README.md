@@ -4,8 +4,12 @@ Using React, build the client-side for an app called myFlix based on its existin
 
 #Features
 
-- List of movies (fetch
-- testing of ([link](https://theawin.github.io/portfolio-website/))
+- List of movies
+- Search function
+- Filter function
+- Signup/login page
+- Movie details
+- Profile edit
 
 #Technical Requirements
 
