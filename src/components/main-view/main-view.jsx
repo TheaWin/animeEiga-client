@@ -29,16 +29,30 @@ export const MainView = () => {
 
   if (selectedMovie) {
     return (
-      <MovieView
-        movie={selectedMovie}
-        onBackClick={() => setselectedMovie(null)}
-      />
+      //Logout button added 
+      <>
+        <MovieView
+          movie={selectedMovie}
+          onBackClick={() => setselectedMovie(null)}
+        />      
+        <button
+          onClick={() => {
+            setUser(null);
+            setToken(null);
+            localStorage.clear();
+          }}
+        > 
+          Logout
+        </button>
+      </>
     );
   }
+  
   if (movies.length === 0) {
     return <div>The list is empty!</div>;
   }
   return (
+    //logout button added
     <div>
       {movies.map((movie) => (
         <MovieCard
@@ -49,6 +63,15 @@ export const MainView = () => {
           }}
         />
       ))}
+      <button
+        onClick={() => {
+          setUser(null);
+          setToken(null);
+          localStorage.clear();
+        }}
+      >
+        Logout
+      </button>
     </div>
   );
 };
