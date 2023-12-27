@@ -94,3 +94,4 @@ export const SignupView = () => {
       <button type="submit">Submit</button>
     </form>
   );
+}
