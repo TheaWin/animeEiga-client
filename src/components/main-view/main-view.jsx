@@ -1,13 +1,26 @@
 import { useState, useEffect } from "react";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
+import { LoginView } from "../login-view/login-view";
+import { SignupView } from "../signup-view/signup-view";
 
 export const MainView = () => {
+  const storedUser = JSON.parse(localStorage.getItem("user"));
+  const storedToken = localStorage.getItem("token");
   const [movies, setMovies] = useState([]);
+  const [selectedMovie, setselectedMovie] = useState(null);
+  const [user, setUser] = useState(storedUser ? storedUser : null);
+  const [token, setToken] = useState(storedToken ? storedToken : null);
 
-  //
+  //data fetching from anime-eiga API with token
   useEffect(() => {
-    fetch("https://anime-eiga-84a0980bd564.herokuapp.com/anime")
+    if (!token) {
+      return;
+    }
+
+    fetch("https://anime-eiga-84a0980bd564.herokuapp.com/anime", {
+      headers: { Authorization: `Bearer ${token}` },
+    })
       .then((response) => response.json())
       .then((data) => {
         const animeFromApi = data.map((anime) => {
@@ -18,14 +31,28 @@ export const MainView = () => {
             imageURL: anime.imageUrl,
             Genre: anime.Genre.Name,
             Director: anime.Director.Name,
-            releaseYear: anime.releaseYear
+            releaseYear: anime.releaseYear,
           };
         });
         setMovies(animeFromApi);
-      })
-  }, []);
+      });
+  }, [token]);
 
-  const [selectedMovie, setselectedMovie] = useState(null);
+  //login and signup view displayed as the first screen for non-authenticated users
+  if (!user) {
+    return (
+      <>
+        <LoginView
+          onLoggedIn={(user, token) => {
+            setUser(user);
+            setToken(token);
+          }}
+        />
+        or
+        <SignupView />
+      </>
+    );
+  }
 
   if (selectedMovie) {
     return (
