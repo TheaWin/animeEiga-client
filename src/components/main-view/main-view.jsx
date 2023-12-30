@@ -28,9 +28,9 @@ export const MainView = () => {
             _id: anime.id,
             Name: anime.Name,
             Description: anime.Description,
-            imageURL: anime.imageUrl,
-            Genre: anime.Genre.Name,
-            Director: anime.Director.Name,
+            imageURL: anime.imageURL,
+            Genre: anime.Genre,
+            Director: anime.Director,
             releaseYear: anime.releaseYear,
           };
         });
