@@ -21,7 +21,7 @@ export const MainView = () => {
         <MovieCard 
         key={movie.id}
         // custom attribute is added to pass the data to a child component, aka, props
-        movieData={movie} />
+        movie={movie} />
       ))} 
       
     </div>
