@@ -1,6 +1,13 @@
-export const MovieCard = ({movie}) => {
+//extracting the onMovieClick prop
+export const MovieCard = ({movie, onMovieClick}) => {
     return (
-      <div> {movie.title} </div>
+      //onClick only works on React elements, e.g. divs, buttons, p's,...
+      <div onClick={() => {
+        onMovieClick(movie);
+      }}
+      >
+        {movie.title}
+      </div>
   );
 };
 

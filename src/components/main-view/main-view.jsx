@@ -28,7 +28,12 @@ export const MainView = () => {
         <MovieCard 
         key={movie.id}
         // custom attribute is added to pass the data to a child component, aka, props
-        movie={movie} />
+        movie={movie}
+        //to add onClick to a component, a function is passed as a prop called onMovieClick
+        onMovieClick = {(newSelectedMovie) => {
+          setSelectedMovie(newSelectedMovie);
+        }}
+        />
       ))} 
     </div>
   );
