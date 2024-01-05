@@ -1,4 +1,4 @@
-export const MovieView = ({movie}) => {
+export const MovieView = ({movie, onBackClick}) => {
   return (
     <div>
       <div>
@@ -28,6 +28,8 @@ export const MovieView = ({movie}) => {
         <span>Release Year: </span>
         <span>{movie.releaseYear}</span>
       </div>
+      {/* onClick takes a function but an arrow function is not used as onBackClick is a function itself */}
+      <button onClick={onBackClick}>Back</button>
     </div>
   );
 };

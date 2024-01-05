@@ -15,7 +15,10 @@ export const MainView = () => {
   const [selectedMovie, setSelectedMovie] = useState(null);
 
   if (selectedMovie) {
-    return <MovieView movie={selectedMovie} />;
+    return <MovieView 
+      movie={selectedMovie} 
+      //by assigning null to selectedMovie, the if condition will return false, thus stop rendering MovieView
+      onBackClick={() => setSelectedMovie(null)} />;
   }
 
   if (movies.length === 0) {
