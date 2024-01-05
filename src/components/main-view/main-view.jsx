@@ -13,6 +13,17 @@ export const MainView = () => {
   }
 
   return (
+    <div>
+      {/* 
+      - `map` method is used to iterate over each item in the array 
+      - "key" attribute is used to better distinguish between the similar elements in the list
+        `movie.id` is used as each movie as their own unique id
+      */}
+      {movies.map((movie) => {
+        return <div key={movie.id}>{movie.title}</div>;
+      })} 
+      
+    </div>
   );
 };
 
