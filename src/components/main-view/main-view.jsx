@@ -1,6 +1,9 @@
 //importing useState Hook that allows to track state in a function component
 import { useState } from "react";
 
+//import MovieCard component to be used
+import { MovieCard } from "../movie-card/movie-card";
+
 //export MainView (main homepage) to be used
 export const MainView = () => {
 
@@ -14,11 +17,6 @@ export const MainView = () => {
 
   return (
     <div>
-      {/* 
-      - `map` method is used to iterate over each item in the array 
-      - "key" attribute is used to better distinguish between the similar elements in the list
-        `movie.id` is used as each movie as their own unique id
-      */}
       {movies.map((movie) => {
         return <div key={movie.id}>{movie.title}</div>;
       })} 
