@@ -1,5 +1,6 @@
 //importing useState Hook that allows to track state in a function component
-import { useState } from "react";
+//importing useEffect Hook that runs a callback function
+import { useState, useEffect } from "react";
 
 //import MovieCard & MovieView component to be used
 import { MovieCard } from "../movie-card/movie-card";
@@ -13,6 +14,30 @@ export const MainView = () => {
   const [movies, setMovies] = useState([]);
   //initial value of selectedMovie is set as null
   const [selectedMovie, setSelectedMovie] = useState(null);
+
+  //fetching data from API by using useEffect hook
+  useEffect(() => {
+    fetch ("https://anime-eiga-84a0980bd564.herokuapp.com/anime")
+      //parsed the response as JSON
+      .then((response) => response.json()) 
+      //processes the JSON result to return a new data array with specific properties
+      .then((data) => {
+        const animeFromApi = data.map((anime) => {
+          return {
+            _id: anime.id,
+            Name: anime.Name,
+            Description: anime.Description,
+            imageURL: anime.imageURL,
+            Genre: anime.Genre,
+            Director: anime.Director,
+            releaseYear: anime.releaseYear,
+            duration: anime.duration,
+          };
+        });
+        //update the state variable `movies`
+        setMovies(animeFromApi);
+      });
+  }, []);
 
   if (selectedMovie) {
     return <MovieView 
