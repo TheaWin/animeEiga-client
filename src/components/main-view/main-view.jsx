@@ -6,6 +6,9 @@ import { useState, useEffect } from "react";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 
+//import LoginView component
+import { LoginView } from "../login-view/login-view";
+
 //export MainView (main homepage) to be used
 export const MainView = () => {
 
@@ -14,6 +17,9 @@ export const MainView = () => {
   const [movies, setMovies] = useState([]);
   //initial value of selectedMovie is set as null
   const [selectedMovie, setSelectedMovie] = useState(null);
+  //initial value of user is set as null
+  const [user,setUser] = useState(null);
+
 
   //fetching data from API by using useEffect hook
   useEffect(() => {
@@ -38,6 +44,10 @@ export const MainView = () => {
         setMovies(animeFromApi);
       });
   }, []);
+
+  if (!user) {
+    return <LoginView />;
+  }
 
   if (selectedMovie) {
     return <MovieView 
