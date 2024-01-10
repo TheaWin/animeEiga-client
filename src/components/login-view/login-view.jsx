@@ -36,17 +36,29 @@ export const LoginView = ({ onLoggedIn }) => {
       <label>
         Username:
         <input 
-        type="text" 
-        value = {username}
-        onChange={(e) => setUsername(e.target.value)}
+          type="text" 
+          value = {username}
+          onChange={(e) => setUsername(e.target.value)}
+          //form validation
+          required
+          minLength="5"
+          pattern="[a-zA-Z0-9]+"
+          onInvalid={(e) =>
+            e.target.setCustomValidity(
+              "Username must have at least 5 characters and be alphanumeric."
+            )
+          }
         />
       </label>
       <label>
         Password:
         <input 
-        type="password" 
-        value = {password}
-        onchange={(e) => setPassword(e.target.value)} />
+          type="password" 
+          value = {password}
+          onchange={(e) => setPassword(e.target.value)}
+          //form validation
+          required
+         />
       </label>
       <button type="submit">Submit</button>
     </form>
