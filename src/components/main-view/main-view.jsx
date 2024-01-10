@@ -45,8 +45,11 @@ export const MainView = () => {
       });
   }, []);
 
+  //LoginView is displayed when no user is logged in
   if (!user) {
-    return <LoginView />;
+    return <LoginView 
+    //callback function pass as a prop from a parent component to a child component
+    onLoggedIn ={(user) => setUser(user)} />;
   }
 
   if (selectedMovie) {
