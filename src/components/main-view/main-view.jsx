@@ -75,7 +75,11 @@ export const MainView = () => {
           setSelectedMovie(newSelectedMovie);
         }}
         />
-      ))} 
+      ))}
+      {/* Logout button */}
+      <button onClick={() => {setUser(null);}}>
+        Logout
+      </button>
     </div>
   );
 };
