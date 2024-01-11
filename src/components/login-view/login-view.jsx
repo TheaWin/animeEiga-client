@@ -19,15 +19,25 @@ export const LoginView = ({ onLoggedIn }) => {
   //POST request send to the specified URL with the form data in JSON format
   fetch("https://anime-eiga-84a0980bd564.herokuapp.com/login", {
     method: "POST",
+    //specifies to the server that the content type of the request is JSON
+    headers: {"Content-Type": "applicaiton/json"},
     body: JSON.stringify(data)
   })
+    //parsing the server response, like user token, as JSON
+    .then((response) => response.json())
     //onLoggedIn prop
-    .then((response) => {
-      if (response.ok) {
-        onLoggedIn(username);
+    .then((data) => {
+      //changed from `response.ok` to `data.username`
+      //login successful if there is a `data.username` else fail
+      if (data.username) {
+        onLoggedIn(data.username, data.token);
       } else {
-        alert ("Login failed");
+        alert ("No such user");
       }
+    })
+    //error handling
+    .catch((e) => {
+      alert("Something went wrong");
     });
   };
   
