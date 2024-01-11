@@ -11,16 +11,19 @@ import { LoginView } from "../login-view/login-view";
 
 //export MainView (main homepage) to be used
 export const MainView = () => {
+  //use the data from localStorage as the default value
+  const storedUser = JSON.parse(localStorage.getItem("user"));
+  const storedToken = localStorage.getItem("token");
 
   /* using useState to add a state variable to the component with the following syntax:
     const [currentState, functionUsedToChangeState ] = useState([]); */
   const [movies, setMovies] = useState([]);
   //initial value of selectedMovie is set as null
   const [selectedMovie, setSelectedMovie] = useState(null);
-  //initial value of user is set as null
-  const [user,setUser] = useState(null);
-  //initial value of token is set as null
-  const [token, setToken] = useState (null);
+  //initial value of user is set as storedUser. if not, null
+  const [user,setUser] = useState(storedUser? storedUser : null);
+  //initial value of user is set as storedToken. if not, null
+  const [token, setToken] = useState (storedToken ? storedToken : null);
 
 
   //fetching data from API by using useEffect hook
