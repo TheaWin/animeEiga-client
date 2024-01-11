@@ -29,8 +29,8 @@ export const LoginView = ({ onLoggedIn }) => {
     .then((data) => {
       //changed from `response.ok` to `data.username`
       //login successful if there is a `data.username` else fail
-      if (data.username) {
-        onLoggedIn(data.username, data.token);
+      if (data.user) {
+        onLoggedIn(data.user, data.token);
       } else {
         alert ("No such user");
       }

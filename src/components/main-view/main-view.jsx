@@ -19,11 +19,21 @@ export const MainView = () => {
   const [selectedMovie, setSelectedMovie] = useState(null);
   //initial value of user is set as null
   const [user,setUser] = useState(null);
+  //initial value of token is set as null
+  const [token, setToken] = useState (null);
 
 
   //fetching data from API by using useEffect hook
   useEffect(() => {
-    fetch ("https://anime-eiga-84a0980bd564.herokuapp.com/anime")
+    //if there's no token, doesn't proceed with the fetch operation
+    if(!token) {
+      return;
+    }
+
+    fetch ("https://anime-eiga-84a0980bd564.herokuapp.com/anime", {
+      //authentication used as server expects a valid token to grant acess
+      headers: {Authorization: `Bearer ${token}`}
+    })
       //parsed the response as JSON
       .then((response) => response.json()) 
       //processes the JSON result to return a new data array with specific properties
@@ -43,13 +53,17 @@ export const MainView = () => {
         //update the state variable `movies`
         setMovies(animeFromApi);
       });
-  }, []);
+  }, [token]//dependency array in which the fetch operation is triggered when the `token` changes
+  );
 
   //LoginView is displayed when no user is logged in
   if (!user) {
     return <LoginView 
-    //callback function pass as a prop from a parent component to a child component
-    onLoggedIn ={(user) => setUser(user)} />;
+      //callback function pass as a prop from a parent component to a child component
+      onLoggedIn ={(user,token) => {
+        setUser(user);
+        setToken(token);
+      }} />;
   }
 
   if (selectedMovie) {
