@@ -8,6 +8,7 @@ import { MovieView } from "../movie-view/movie-view";
 
 //import LoginView component
 import { LoginView } from "../login-view/login-view";
+import { SignupView } from "../signup-view/signup-view";
 
 //export MainView (main homepage) to be used
 export const MainView = () => {
@@ -61,12 +62,17 @@ export const MainView = () => {
 
   //LoginView is displayed when no user is logged in
   if (!user) {
-    return <LoginView 
-      //callback function pass as a prop from a parent component to a child component
-      onLoggedIn ={(user,token) => {
-        setUser(user);
-        setToken(token);
-      }} />;
+    return (
+      <>
+        <LoginView 
+          //callback function pass as a prop from a parent component to a child component
+          onLoggedIn ={(user,token) => {
+            setUser(user);
+            setToken(token);
+          }} /> or
+        <SignupView/>
+      </>
+    );    
   }
 
   if (selectedMovie) {
