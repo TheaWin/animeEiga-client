@@ -8,7 +8,33 @@ export const SignupView = () => {
   const [email, setEmail] = useState("");
   const [birthday, setBirthday] = useState("");
 
-  const handleSubmit = (event) => {};
+  const handleSubmit = (event) => {
+    // this prevents the default behavior of the form which is to reload the entire page
+    event.preventDefault();
+
+    const data = {
+      username: username,
+      name: name,
+      password: password,
+      email: email,
+      birthday: birthday,
+    };
+
+    fetch("https://anime-eiga-84a0980bd564.herokuapp.com/users", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((response) => {
+      if (response.ok) {
+        alert("Signup successful");
+        window.location.reload();
+      } else {
+        alert("Signup failed");
+      }
+    });
+  };
 
   return (
     <form onSubmit={handleSubmit}>
