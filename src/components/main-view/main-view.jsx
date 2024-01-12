@@ -34,12 +34,12 @@ export const MainView = () => {
       return;
     }
 
-    fetch ("https://anime-eiga-84a0980bd564.herokuapp.com/anime", {
+    fetch("https://anime-eiga-84a0980bd564.herokuapp.com/anime", {
       //authentication used as server expects a valid token to grant acess
-      headers: {Authorization: `Bearer ${token}`}
+      headers: { Authorization: `Bearer ${token}` },
     })
       //parsed the response as JSON
-      .then((response) => response.json()) 
+      .then((response) => response.json())
       //processes the JSON result to return a new data array with specific properties
       .then((data) => {
         const animeFromApi = data.map((anime) => {
@@ -48,10 +48,9 @@ export const MainView = () => {
             Name: anime.Name,
             Description: anime.Description,
             imageURL: anime.imageURL,
-            Genre: anime.Genre,
-            Director: anime.Director,
+            Genre: anime.Genre.Name,
+            Director: anime.Director.Name,
             releaseYear: anime.releaseYear,
-            duration: anime.duration,
           };
         });
         //update the state variable `movies`

@@ -2,7 +2,7 @@ export const MovieView = ({movie, onBackClick}) => {
   return (
     <div>
       <div>
-        <img src="{movie.imageURL}" alt="anime cover"/>
+        <img src={movie.imageURL} alt="movie cover" />
       </div>
       <div>
         <span>Title: </span>
