@@ -1,104 +1,113 @@
+//importing useState Hook that allows to track state in a function component
+//importing useEffect Hook that runs a callback function
 import { useState, useEffect } from "react";
+
+//import MovieCard & MovieView component to be used
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
+
+//import LoginView component
 import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
 
+//export MainView (main homepage) to be used
 export const MainView = () => {
+  //use the data from localStorage as the default value
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const storedToken = localStorage.getItem("token");
-  const [movies, setMovies] = useState([]);
-  const [selectedMovie, setselectedMovie] = useState(null);
-  const [user, setUser] = useState(storedUser ? storedUser : null);
-  const [token, setToken] = useState(storedToken ? storedToken : null);
 
-  //data fetching from anime-eiga API with token
+  /* using useState to add a state variable to the component with the following syntax:
+    const [currentState, functionUsedToChangeState ] = useState([]); */
+  const [movies, setMovies] = useState([]);
+  //initial value of selectedMovie is set as null
+  const [selectedMovie, setSelectedMovie] = useState(null);
+  //initial value of user is set as storedUser. if not, null
+  const [user,setUser] = useState(storedUser? storedUser : null);
+  //initial value of user is set as storedToken. if not, null
+  const [token, setToken] = useState (storedToken ? storedToken : null);
+
+
+  //fetching data from API by using useEffect hook
   useEffect(() => {
-    if (!token) {
+    //if there's no token, doesn't proceed with the fetch operation
+    if(!token) {
       return;
     }
 
     fetch("https://anime-eiga-84a0980bd564.herokuapp.com/anime", {
+      //authentication used as server expects a valid token to grant acess
       headers: { Authorization: `Bearer ${token}` },
     })
+      //parsed the response as JSON
       .then((response) => response.json())
+      //processes the JSON result to return a new data array with specific properties
       .then((data) => {
         const animeFromApi = data.map((anime) => {
           return {
             _id: anime.id,
             Name: anime.Name,
             Description: anime.Description,
-            imageURL: anime.imageUrl,
+            imageURL: anime.imageURL,
             Genre: anime.Genre.Name,
             Director: anime.Director.Name,
             releaseYear: anime.releaseYear,
           };
         });
+        //update the state variable `movies`
         setMovies(animeFromApi);
       });
-  }, [token]);
+  }, [token]//dependency array in which the fetch operation is triggered when the `token` changes
+  );
 
-  //login and signup view displayed as the first screen for non-authenticated users
+  //LoginView is displayed when no user is logged in
   if (!user) {
     return (
       <>
-        <LoginView
-          onLoggedIn={(user, token) => {
+        <LoginView 
+          //callback function pass as a prop from a parent component to a child component
+          onLoggedIn ={(user,token) => {
             setUser(user);
             setToken(token);
-          }}
-        />
-        or
-        <SignupView />
+          }} /> or
+        <SignupView/>
       </>
-    );
+    );    
   }
 
   if (selectedMovie) {
-    return (
-      //Logout button added 
-      <>
-        <MovieView
-          movie={selectedMovie}
-          onBackClick={() => setselectedMovie(null)}
-        />      
-        <button
-          onClick={() => {
-            setUser(null);
-            setToken(null);
-            localStorage.clear();
-          }}
-        > 
-          Logout
-        </button>
-      </>
-    );
+    return <MovieView 
+      movie={selectedMovie} 
+      //by assigning null to selectedMovie, the if condition will return false, thus stop rendering MovieView
+      onBackClick={() => setSelectedMovie(null)} />;
   }
-  
+
   if (movies.length === 0) {
     return <div>The list is empty!</div>;
   }
+
   return (
-    //logout button added
     <div>
       {movies.map((movie) => (
-        <MovieCard
-          key={movie._id}
-          movie={movie}
-          onMovieClick={(newSelectedMovie) => {
-            setselectedMovie(newSelectedMovie);
-          }}
+        <MovieCard 
+        key={movie.id}
+        // custom attribute is added to pass the data to a child component, aka, props
+        movie={movie}
+        //to add onClick to a component, a function is passed as a prop called onMovieClick
+        onMovieClick = {(newSelectedMovie) => {
+          setSelectedMovie(newSelectedMovie);
+        }}
         />
       ))}
-      <button
-        onClick={() => {
-          setUser(null);
-          setToken(null);
-          localStorage.clear();
-        }}
-      >
+      {/* Logout button */}
+      <button onClick={() => {setUser(null);setToken(null);}}>
         Logout
       </button>
     </div>
   );
 };
+
+//different export syntax
+/* const MainView = () => {
+  ...
+}
+export MainView; */

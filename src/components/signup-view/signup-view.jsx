@@ -1,13 +1,15 @@
 import { useState } from "react";
 
+//SignupView function componenent
 export const SignupView = () => {
   const [username, setUsername] = useState("");
-  const [name, setName] = useState("");
+  const [name, setName] = useState ("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [birthday, setBirthday] = useState("");
 
   const handleSubmit = (event) => {
+    // this prevents the default behavior of the form which is to reload the entire page
     event.preventDefault();
 
     const data = {
@@ -37,7 +39,7 @@ export const SignupView = () => {
   return (
     <form onSubmit={handleSubmit}>
       <label>
-        Username:
+        Username: 
         <input
           type="text"
           value={username}
@@ -93,5 +95,5 @@ export const SignupView = () => {
       </label>
       <button type="submit">Submit</button>
     </form>
-  );
+  )
 }

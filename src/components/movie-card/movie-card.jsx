@@ -1,18 +1,19 @@
+//import PropTypes to validates the data types
 import PropTypes from "prop-types";
 
-export const MovieCard = ({ movie, onMovieClick }) => {
+//extracting the onMovieClick prop
+export const MovieCard = ({movie, onMovieClick}) => {
   return (
-    <div
-      onClick={() => {
-        onMovieClick(movie);
-      }}
-    >
-      {movie.Name}
+    //onClick only works on React elements, e.g. divs, buttons, p's,...
+    <div onClick={() => {
+      onMovieClick(movie);
+    }}>
+    {movie.Name}
     </div>
   );
 };
 
-//define all the props constraints for the movie-card
+//define all the props constraints for the MovieCard
 MovieCard.propTypes = {
   movie: PropTypes.shape({
     Name: PropTypes.string,
