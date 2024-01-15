@@ -25,6 +25,8 @@ export const MainView = () => {
   const [user,setUser] = useState(storedUser? storedUser : null);
   //initial value of user is set as storedToken. if not, null
   const [token, setToken] = useState (storedToken ? storedToken : null);
+  //initial value of showSignup set as false as it will be hidden
+  const [showSignup, setShowSignup] = useState(false);
 
 
   //fetching data from API by using useEffect hook
@@ -61,17 +63,43 @@ export const MainView = () => {
 
   //LoginView is displayed when no user is logged in
   if (!user) {
-    return (
-      <>
-        <LoginView 
-          //callback function pass as a prop from a parent component to a child component
-          onLoggedIn ={(user,token) => {
-            setUser(user);
-            setToken(token);
-          }} /> or
-        <SignupView/>
-      </>
-    );    
+    //LoginView is set to be displayed when showSignup is set as false
+    if(!showSignup) {
+      return (
+        <>
+          <LoginView
+            onLoggedIn={(user,token) => {
+              setUser(user);
+              setToken(token);
+            }}
+          />
+          <div>
+            <span>No Account?</span>
+            {/* Link to toggle SignupView component */}
+            <a href="#" onClick={() => setShowSignup(true)}>
+              Sign Up
+            </a>
+          </div>
+        </>
+      );
+    } else {
+      return (
+        <>
+          {/* SignupView is set to displayed when there is no user and ShowSignup is set as true */}
+          <SignupView
+            onSignedUp = {() => {
+              setShowSignup(false);
+          }} />
+          <div>
+            <span>Already have an account?</span>
+            {/* Link to toggle LoginView component */}
+            <a href="#" onClick={() => setShowSignup(false)}>
+              Log In
+            </a>
+          </div>
+        </>
+      );
+    }
   }
 
   if (selectedMovie) {

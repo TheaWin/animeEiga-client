@@ -27196,6 +27196,8 @@ const MainView = ()=>{
     const [user, setUser] = (0, _react.useState)(storedUser ? storedUser : null);
     //initial value of user is set as storedToken. if not, null
     const [token, setToken] = (0, _react.useState)(storedToken ? storedToken : null);
+    //initial value of showSignup set as false as it will be hidden
+    const [showSignup, setShowSignup] = (0, _react.useState)(false);
     //fetching data from API by using useEffect hook
     (0, _react.useEffect)(()=>{
         //if there's no token, doesn't proceed with the fetch operation
@@ -27227,41 +27229,55 @@ const MainView = ()=>{
     ] //dependency array in which the fetch operation is triggered when the `token` changes
     );
     //LoginView is displayed when no user is logged in
-    if (!user) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
-        children: [
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _loginView.LoginView), {
-                //callback function pass as a prop from a parent component to a child component
-                onLoggedIn: (user, token)=>{
-                    setUser(user);
-                    setToken(token);
+    if (!user) {
+        if (!showSignup) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
+            children: [
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _loginView.LoginView), {
+                    onLoggedIn: (user, token)=>{
+                        setUser(user);
+                        setToken(token);
+                    }
+                }, void 0, false, {
+                    fileName: "src/components/main-view/main-view.jsx",
+                    lineNumber: 69,
+                    columnNumber: 11
+                }, undefined),
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                    onClick: ()=>setShowSignup(true),
+                    children: " Sign up "
+                }, void 0, false, {
+                    fileName: "src/components/main-view/main-view.jsx",
+                    lineNumber: 75,
+                    columnNumber: 11
+                }, undefined)
+            ]
+        }, void 0, true);
+        else return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
+            children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _signupView.SignupView), {
+                onSignedUp: ()=>{
+                    setShowSignup(false);
                 }
             }, void 0, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 66,
-                columnNumber: 9
-            }, undefined),
-            " or",
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _signupView.SignupView), {}, void 0, false, {
-                fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 72,
-                columnNumber: 9
+                lineNumber: 81,
+                columnNumber: 11
             }, undefined)
-        ]
-    }, void 0, true);
+        }, void 0, false);
+    }
     if (selectedMovie) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieView.MovieView), {
         movie: selectedMovie,
         //by assigning null to selectedMovie, the if condition will return false, thus stop rendering MovieView
         onBackClick: ()=>setSelectedMovie(null)
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 78,
+        lineNumber: 91,
         columnNumber: 12
     }, undefined);
     if (movies.length === 0) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: "The list is empty!"
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 85,
+        lineNumber: 98,
         columnNumber: 12
     }, undefined);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -27275,7 +27291,7 @@ const MainView = ()=>{
                     }
                 }, movie.id, false, {
                     fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 91,
+                    lineNumber: 104,
                     columnNumber: 9
                 }, undefined)),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
@@ -27286,13 +27302,13 @@ const MainView = ()=>{
                 children: "Logout"
             }, void 0, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 102,
+                lineNumber: 115,
                 columnNumber: 7
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 89,
+        lineNumber: 102,
         columnNumber: 5
     }, undefined);
 }; //different export syntax
@@ -27300,7 +27316,7 @@ const MainView = ()=>{
   ...
 }
 export MainView; */ 
-_s(MainView, "pDAukc1x4VdImq96a1k5i80fzpg=");
+_s(MainView, "XLO2Wd6mFSi11Qf4Kigl7ymHKNw=");
 _c = MainView;
 var _c;
 $RefreshReg$(_c, "MainView");
@@ -28483,7 +28499,7 @@ const LoginView = ({ onLoggedIn })=>{
             method: "POST",
             //specifies to the server that the content type of the request is JSON
             headers: {
-                "Content-Type": "applicaiton/json"
+                "Content-Type": "application/json"
             },
             body: JSON.stringify(data)
         })//parsing the server response, like user token, as JSON
@@ -28534,7 +28550,7 @@ const LoginView = ({ onLoggedIn })=>{
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
                         type: "password",
                         value: password,
-                        onchange: (e)=>setPassword(e.target.value),
+                        onChange: (e)=>setPassword(e.target.value),
                         //form validation
                         required: true
                     }, void 0, false, {
@@ -28586,7 +28602,7 @@ parcelHelpers.export(exports, "SignupView", ()=>SignupView);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react");
 var _s = $RefreshSig$();
-const SignupView = ()=>{
+const SignupView = ({ onSignedUp })=>{
     _s();
     const [username, setUsername] = (0, _react.useState)("");
     const [name, setName] = (0, _react.useState)("");
@@ -28612,7 +28628,7 @@ const SignupView = ()=>{
         }).then((response)=>{
             if (response.ok) {
                 alert("Signup successful");
-                window.location.reload();
+                onSignedUp();
             } else alert("Signup failed");
         });
     };

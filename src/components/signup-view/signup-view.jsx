@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 //SignupView function componenent
-export const SignupView = () => {
+export const SignupView = ({onSignedUp}) => {
   const [username, setUsername] = useState("");
   const [name, setName] = useState ("");
   const [password, setPassword] = useState("");
@@ -29,7 +29,7 @@ export const SignupView = () => {
     }).then((response) => {
       if (response.ok) {
         alert("Signup successful");
-        window.location.reload();
+        onSignedUp();
       } else {
         alert("Signup failed");
       }
