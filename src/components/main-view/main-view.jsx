@@ -10,6 +10,8 @@ import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
 
+import { NavBar } from "../nav-bar/nav-bar";
+
 //export MainView (main homepage) to be used
 export const MainView = () => {
   //use the data from localStorage as the default value
@@ -67,6 +69,7 @@ export const MainView = () => {
     if(!showSignup) {
       return (
         <>
+          <NavBar />
           <LoginView
             onLoggedIn={(user,token) => {
               setUser(user);
@@ -85,6 +88,7 @@ export const MainView = () => {
     } else {
       return (
         <>
+          <NavBar />
           {/* SignupView is set to displayed when there is no user and ShowSignup is set as true */}
           <SignupView
             onSignedUp = {() => {
@@ -115,6 +119,7 @@ export const MainView = () => {
 
   return (
     <div>
+      <NavBar />
       {movies.map((movie) => (
         <MovieCard 
         key={movie.id}
