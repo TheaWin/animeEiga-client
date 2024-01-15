@@ -20,7 +20,7 @@ export const LoginView = ({ onLoggedIn }) => {
   fetch("https://anime-eiga-84a0980bd564.herokuapp.com/login", {
     method: "POST",
     //specifies to the server that the content type of the request is JSON
-    headers: {"Content-Type": "applicaiton/json"},
+    headers: {"Content-Type": "application/json"},
     body: JSON.stringify(data)
   })
     //parsing the server response, like user token, as JSON
@@ -68,7 +68,7 @@ export const LoginView = ({ onLoggedIn }) => {
         <input 
           type="password" 
           value = {password}
-          onchange={(e) => setPassword(e.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
           //form validation
           required
          />
