@@ -4,10 +4,11 @@ import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { useState } from "react";
 
-export const NavBar = () => {
+export const NavBar = ({ onLoggedOut }) => {
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
+    <Navbar expand="lg" className="bg-body-tertiary" sticky="top">
       <Container>
         <Navbar.Brand href="#home">Anime-Eiga</Navbar.Brand>
         {/* Hamburger dropdown menu for small screen */}
@@ -26,7 +27,15 @@ export const NavBar = () => {
           {/* Align these links to the right */}
           <Nav className="ml-auto">
             <Nav.Link href="">Favorites</Nav.Link>
-            <Nav.Link href="">My Account</Nav.Link>
+            <NavDropdown title="Account" id="basic-nav-dropdown">
+              <NavDropdown.Item href="#">Username</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item href="#">My Account</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item href="#" onClick={onLoggedOut}>
+                Logout
+              </NavDropdown.Item>
+            </NavDropdown>
           </Nav>
           {/* search box with anime name */}
           <Form className="d-flex">
