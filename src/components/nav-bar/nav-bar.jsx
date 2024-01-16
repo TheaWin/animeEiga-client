@@ -26,10 +26,13 @@ export const NavBar = ({ onLoggedOut }) => {
           </Nav>
           {/* Align these links to the right */}
           <Nav className="ml-auto">
+            {/* link for user favorites list */}
             <Nav.Link href="">Favorites</Nav.Link>
             <NavDropdown title="Account" id="basic-nav-dropdown">
+            {/* username will be user.username */}
               <NavDropdown.Item href="#">Username</NavDropdown.Item>
               <NavDropdown.Divider />
+              {/* link will lead to profile information where you can edit and delete acc */}
               <NavDropdown.Item href="#">My Account</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#" onClick={onLoggedOut}>
