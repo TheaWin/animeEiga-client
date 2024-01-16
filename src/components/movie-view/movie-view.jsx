@@ -1,4 +1,8 @@
-export const MovieView = ({movie, onBackClick}) => {
+import { Button } from "react-bootstrap";
+//import movie-view.scss for styling
+import "./movie-view.scss";
+
+export const MovieView = ({ movie, onBackClick }) => {
   return (
     <div>
       <div>
@@ -29,7 +33,9 @@ export const MovieView = ({movie, onBackClick}) => {
         <span>{movie.releaseYear}</span>
       </div>
       {/* onClick takes a function but an arrow function is not used as onBackClick is a function itself */}
-      <button onClick={onBackClick}>Back</button>
+      <Button onClick={onBackClick} className="back-button">
+        Back
+      </Button>
     </div>
   );
 };
