@@ -11,7 +11,7 @@ import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
 
 //import Navbar
-import { NavBar } from "../Nav-bar/nav-bar";
+import { NavBar } from "../nav-bar/nav-bar";
 
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -151,7 +151,7 @@ export const MainView = () => {
       )}
     </Row>
   );
-
+}
 //different export syntax
 /* const MainView = () => {
   ...
