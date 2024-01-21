@@ -1,5 +1,6 @@
 //Create a React root for displaying content inside a browser DOM element
 import { createRoot } from 'react-dom/client';
+import Container from "react-bootstrap/Container";
 
 /* syntax to import components:
 import { ComponentName } from '[path to the component file]'; */
@@ -10,8 +11,12 @@ import "./index.scss";
 
 //Main component
 const AnimeApplication = () => {
-  return <MainView />;
-}
+  return (
+    <Container>
+      <MainView />
+    </Container>
+  );
+};
 
 //Finds the root of the app
 const container = document.querySelector("#root");//assigned to the HTML element with the id "root"
