@@ -1,8 +1,16 @@
-import { Button } from "react-bootstrap";
+//provide access to the parameters (route tokens) extracted from the current URL in a React component
+import { useParams } from "react-router";
+//navigational links for client-side routing
+import { Link } from "react-router-dom";
+
 //import movie-view.scss for styling
 import "./movie-view.scss";
 
-export const MovieView = ({ movie, onBackClick }) => {
+export const MovieView = ({ movies }) => {
+  const { movieId } = useParams();
+
+  const movie = movies.find((anime) => anime._id === movieId);
+
   return (
     <div>
       <div>
@@ -32,10 +40,10 @@ export const MovieView = ({ movie, onBackClick }) => {
         <span>Release Year: </span>
         <span>{movie.releaseYear}</span>
       </div>
-      {/* onClick takes a function but an arrow function is not used as onBackClick is a function itself */}
-      <Button onClick={onBackClick} className="back-button">
-        Back
-      </Button>
+      {/* Link used instead of onBackClick */}
+      <Link to={"/"}>
+        <button className="back-button">Back</button>
+      </Link>
     </div>
   );
 };

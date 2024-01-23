@@ -1,24 +1,23 @@
+import React from "react";
 //import PropTypes to validates the data types
 import PropTypes from "prop-types";
 //import Button & Card from Bootstrap
-import { Button, Card } from "react-bootstrap";
+import { Card } from "react-bootstrap";
+
+//navigational links for client-side routing
+import { Link } from "react-router-dom";
 
 //extracting the onMovieClick prop
-export const MovieCard = ({ movie, onMovieClick }) => {
+export const MovieCard = ({ movie }) => {
   return (
-    //onClick only works on React elements, e.g. divs, buttons, p's,...
-    <Card
-      className="h-100"
-      onClick={() => {
-        onMovieClick(movie);
-      }}
-      style={{ cursor: "pointer" }}
-    >
-      <Card.Img variant="top" src={movie.imageURL} />
-      <Card.Body>
-        <Card.Title>{movie.Name}</Card.Title>
-      </Card.Body>
-    </Card>
+    <Link to={`/anime/${encodeURIComponent(movie._id)}`}>
+      <Card className="h-100" variant="link" style={{ cursor: "pointer" }}>
+        <Card.Img variant="top" src={movie.imageURL} />
+        <Card.Body>
+          <Card.Title>{movie.Name}</Card.Title>
+        </Card.Body>
+      </Card>
+    </Link>
   );
 };
 

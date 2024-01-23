@@ -16,6 +16,10 @@ import { NavBar } from "../nav-bar/nav-bar";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
+//import for implementing client-side routing
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+
+
 //export MainView (main homepage) to be used
 export const MainView = () => {
   //use the data from localStorage as the default value
@@ -25,15 +29,12 @@ export const MainView = () => {
   /* using useState to add a state variable to the component with the following syntax:
     const [currentState, functionUsedToChangeState ] = useState([]); */
   const [movies, setMovies] = useState([]);
-  //initial value of selectedMovie is set as null
-  const [selectedMovie, setSelectedMovie] = useState(null);
+/*   initial value of selectedMovie is set as null
+  const [selectedMovie, setSelectedMovie] = useState(null); */
   //initial value of user is set as storedUser. if not, null
   const [user, setUser] = useState(storedUser ? storedUser : null);
   //initial value of user is set as storedToken. if not, null
   const [token, setToken] = useState(storedToken ? storedToken : null);
-  //
-  const [showLogin, setShowLogin] = useState(true);
-  const [showSignup, setShowSignup] = useState(false);
 
   //fetching data from API by using useEffect hook
   useEffect(() => {
@@ -52,7 +53,7 @@ export const MainView = () => {
         .then((data) => {
           const animeFromApi = data.map((anime) => {
             return {
-              _id: anime.id,
+              _id: anime._id,
               Name: anime.Name,
               Description: anime.Description,
               imageURL: anime.imageURL,
@@ -70,86 +71,99 @@ export const MainView = () => {
   );
 
   return (
-    <Row className="justify-content-md-center">
-      {!user ? (
-        !showSignup ? (
-          <>
-            <NavBar />
-            <Col md={5}>
-              <LoginView
-                onLoggedIn={(user, token) => {
-                  setUser(user);
-                  setToken(token);
-                }}
-              />
-              <div>
-                <span>No Account?</span>
-                <a href="#" onClick={() => setShowSignup(true)}>
-                  Sign Up
-                </a>
-              </div>
-            </Col>
-          </>
-        ) : (
-          <>
-            <NavBar />
-            <Col md={5}>
-              <SignupView
-                onSignedUp={() => {
-                  setShowSignup(false);
-                }}
-              />
-              <div>
-                <span>Already have an account?</span>
-                <a href="#" onClick={() => setShowSignup(false)}>
-                  Log In
-                </a>
-              </div>
-            </Col>
-          </>
-        )
-      ) : selectedMovie ? (
-        <>
-          {/* setUser & setToken set as null for logout button */}
-          <NavBar
-            onLoggedOut={() => {
-              setUser(null);
-              setToken(null);
-            }}
+    //Wrapper for client-side routing
+    <BrowserRouter>
+      <Row className="justify-content-md-center">
+        {/* Route Configurations */}
+        <Routes>
+          {/* Route for signup */}
+          <Route
+            path="/signup"
+            element={
+              <>
+                {/* If user is logged in, navigate to home; otherwise, render SignupView */}
+                {user ? (
+                  <Navigate to="/" />
+                ) : (
+                  <>
+                    <NavBar />
+                    <Col md={5}>
+                      <SignupView />
+                    </Col>
+                  </>
+                )}
+              </>
+            }
           />
-          <Col md={8}>
-            <MovieView
-              movie={selectedMovie}
-              //by assigning null to selectedMovie, the if condition will return false, thus stop rendering MovieView
-              onBackClick={() => setSelectedMovie(null)}
-            />
-          </Col>
-        </>
-      ) : movies.length === 0 ? (
-        <div>The list is empty!</div>
-      ) : (
-        <>
-          <NavBar
-            onLoggedOut={() => {
-              setUser(null);
-              setToken(null);
-            }}
+
+          {/* Route for login */}
+          <Route
+            path="/login"
+            element={
+              <>
+                {/* If user is logged in, navigate to home; otherwise, render LoginView */}
+                {user ? (
+                  <Navigate to="/" />
+                ) : (
+                  <>
+                    <NavBar />
+                    <Col md={5}>
+                      <LoginView />
+                    </Col>
+                  </>
+                )}
+              </>
+            }
           />
-          {movies.map((movie) => (
-            <Col key={movie.id} md={3} className="mb-5">
-              <MovieCard
-                // custom attribute is added to pass the data to a child component, aka, props
-                movie={movie}
-                //to add onClick to a component, a function is passed as a prop called onMovieClick
-                onMovieClick={(newSelectedMovie) => {
-                  setSelectedMovie(newSelectedMovie);
-                }}
-              />
-            </Col>
-          ))}
-        </>
-      )}
-    </Row>
+
+          {/* Route for individual movie view */}
+          <Route
+            path="/anime/:movieId"
+            element={
+              <>
+                {/* If user is not logged in, navigate to login; otherwise, render MovieView or show empty list message */}
+                {!user ? (
+                  <Navigate to="/login" replace />
+                ) : movies.length === 0 ? (
+                  <Col> The list is empty! </Col>
+                ) : (
+                  <>
+                    <NavBar />
+                    <Col md={8}>
+                      <MovieView movies={movies} />
+                    </Col>
+                  </>
+                )}
+              </>
+            }
+          />
+
+          {/* Home view or Default route */}
+          <Route
+            path="/"
+            element={
+              <>
+                {/* If user is not logged in, navigate to login; otherwise, render MovieCard list or show empty list message */}
+                {!user ? (
+                  <Navigate to="/login" replace />
+                ) : movies.length === 0 ? (
+                  <Col>The list is empty!</Col>
+                ) : (
+                  <>
+                    <NavBar />
+                    {movies.map((movie) => (
+                      <Col className="mb-4" key={movie.id} md={3}>
+                        <MovieCard movie={movie} />
+                      </Col>
+                    ))}
+                  </>
+                )}
+              </>
+            }
+          />
+        </Routes>
+      </Row>
+    </BrowserRouter>
   );
 }
 //different export syntax
