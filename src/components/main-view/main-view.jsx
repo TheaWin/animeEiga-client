@@ -11,7 +11,7 @@ import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
 
 //import Navbar
-import { NavBar } from "../nav-bar/nav-bar";
+import { NavigationBar } from "../navigation-bar/navigation-bar";
 
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -73,6 +73,13 @@ export const MainView = () => {
   return (
     //Wrapper for client-side routing
     <BrowserRouter>
+      <NavigationBar
+        user={user}
+        onLoggedOut={() => {
+          setUser(null);
+          setToken(null);
+        }}
+      />
       <Row className="justify-content-md-center">
         {/* Route Configurations */}
         <Routes>
@@ -85,12 +92,9 @@ export const MainView = () => {
                 {user ? (
                   <Navigate to="/" />
                 ) : (
-                  <>
-                    <NavBar />
-                    <Col md={5}>
-                      <SignupView />
-                    </Col>
-                  </>
+                  <Col md={5}>
+                    <SignupView />
+                  </Col>
                 )}
               </>
             }
@@ -105,12 +109,14 @@ export const MainView = () => {
                 {user ? (
                   <Navigate to="/" />
                 ) : (
-                  <>
-                    <NavBar />
-                    <Col md={5}>
-                      <LoginView />
-                    </Col>
-                  </>
+                  <Col md={5}>
+                    <LoginView
+                      onLoggedIn={(user) => {
+                        setUser(user);
+                        setToken(token);
+                      }}
+                    />
+                  </Col>
                 )}
               </>
             }
@@ -127,12 +133,9 @@ export const MainView = () => {
                 ) : movies.length === 0 ? (
                   <Col> The list is empty! </Col>
                 ) : (
-                  <>
-                    <NavBar />
-                    <Col md={8}>
-                      <MovieView movies={movies} />
-                    </Col>
-                  </>
+                  <Col md={8}>
+                    <MovieView movies={movies} />
+                  </Col>
                 )}
               </>
             }
@@ -150,7 +153,6 @@ export const MainView = () => {
                   <Col>The list is empty!</Col>
                 ) : (
                   <>
-                    <NavBar />
                     {movies.map((movie) => (
                       <Col className="mb-4" key={movie.id} md={3}>
                         <MovieCard movie={movie} />
