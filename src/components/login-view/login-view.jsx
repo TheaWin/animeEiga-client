@@ -1,6 +1,10 @@
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+
+//navigational links for client-side routing
+import { Link } from "react-router-dom";
+
 import "./login-view.scss";
 
 //LoginView function component
@@ -48,37 +52,45 @@ export const LoginView = ({ onLoggedIn }) => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Group controlId="formUsername">
-        <Form.Label>Username:</Form.Label>
-        <Form.Control
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          //form validation
-          required
-          minLength="5"
-          pattern="[a-zA-Z0-9]+"
-          onInvalid={(e) =>
-            e.target.setCustomValidity(
-              "Username must have at least 5 characters and be alphanumeric."
-            )
-          }
-        />
-      </Form.Group>
-      <Form.Group controlId="formPassword">
-        <Form.Label>Password:</Form.Label>
-        <Form.Control
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          //form validation
-          required
-        />
-      </Form.Group>
-      <Button type="submit" className="submit-button">
-        Submit
-      </Button>
-    </Form>
+    <>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group controlId="formUsername">
+          <Form.Label>Username:</Form.Label>
+          <Form.Control
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            //form validation
+            required
+            minLength="5"
+            pattern="[a-zA-Z0-9]+"
+            onInvalid={(e) =>
+              e.target.setCustomValidity(
+                "Username must have at least 5 characters and be alphanumeric."
+              )
+            }
+          />
+        </Form.Group>
+        <Form.Group controlId="formPassword">
+          <Form.Label>Password:</Form.Label>
+          <Form.Control
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            //form validation
+            required
+          />
+        </Form.Group>
+        <Button type="submit" className="submit-button">
+          Submit
+        </Button>
+      </Form>
+      <div>
+        <span>No Account? </span>
+        <Link to={"/signup"}>
+          <span>Signup</span>
+        </Link>
+      </div>
+    </>
   );
 };

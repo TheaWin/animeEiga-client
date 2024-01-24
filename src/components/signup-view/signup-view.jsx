@@ -1,10 +1,14 @@
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+
+//navigational links for client-side routing
+import { Link } from "react-router-dom";
+
 import "./signup-view.scss";
 
 //SignupView function componenent
-export const SignupView = ({ onSignedUp }) => {
+export const SignupView = ({  }) => {
   const [username, setUsername] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -32,8 +36,7 @@ export const SignupView = ({ onSignedUp }) => {
     }).then((response) => {
       if (response.ok) {
         alert("Signup successful");
-        onSignedUp();
-        // window.location.reload();
+        window.location.reload();
       } else {
         alert("Signup failed");
       }
@@ -41,63 +44,71 @@ export const SignupView = ({ onSignedUp }) => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Group controlId="formUsername">
-        <Form.Label>Username:</Form.Label>
-        <Form.Control
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          //form validation
-          required
-          minLength="5"
-          pattern="[a-zA-Z0-9]+"
-          onInvalid={(e) =>
-            e.target.setCustomValidity(
-              "Username must have at least 5 characters and be alphanumeric."
-            )
-          }
-        />
-      </Form.Group>
-      <Form.Group controlId="formName">
-        <Form.Label>Name: </Form.Label>
-        <Form.Control
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-        />
-      </Form.Group>
-      <Form.Group controlId="formPassword">
-        <Form.Label>Password: </Form.Label>
-        <Form.Control
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </Form.Group>
-      <Form.Group controlId="formEmail">
-        <Form.Label>Email: </Form.Label>
-        <Form.Control
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-      </Form.Group>
-      <Form.Group controlId="formBirthday">
-        <Form.Label>Birthday: </Form.Label>
-        <Form.Control
-          type="date"
-          value={birthday}
-          onChange={(e) => setBirthday(e.target.value)}
-          required
-        />
-      </Form.Group>
-      <Button type="submit" className="submit-button">
-        Submit
-      </Button>
-    </Form>
+    <>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group controlId="formUsername">
+          <Form.Label>Username:</Form.Label>
+          <Form.Control
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            //form validation
+            required
+            minLength="5"
+            pattern="[a-zA-Z0-9]+"
+            onInvalid={(e) =>
+              e.target.setCustomValidity(
+                "Username must have at least 5 characters and be alphanumeric."
+              )
+            }
+          />
+        </Form.Group>
+        <Form.Group controlId="formName">
+          <Form.Label>Name: </Form.Label>
+          <Form.Control
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+        </Form.Group>
+        <Form.Group controlId="formPassword">
+          <Form.Label>Password: </Form.Label>
+          <Form.Control
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </Form.Group>
+        <Form.Group controlId="formEmail">
+          <Form.Label>Email: </Form.Label>
+          <Form.Control
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </Form.Group>
+        <Form.Group controlId="formBirthday">
+          <Form.Label>Birthday: </Form.Label>
+          <Form.Control
+            type="date"
+            value={birthday}
+            onChange={(e) => setBirthday(e.target.value)}
+            required
+          />
+        </Form.Group>
+        <Button type="submit" className="submit-button">
+          Submit
+        </Button>
+      </Form>
+      <div>
+        <span>Already have an account? </span>
+        <Link to={"/login"}>
+          <span>Log In</span>
+        </Link>
+      </div>
+    </>
   );
 };
