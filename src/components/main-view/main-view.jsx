@@ -18,7 +18,7 @@ import Col from "react-bootstrap/Col";
 
 //import for implementing client-side routing
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-
+import { ProfileView } from "../profile-view/profile-view";
 
 //export MainView (main homepage) to be used
 export const MainView = () => {
@@ -29,15 +29,14 @@ export const MainView = () => {
   /* using useState to add a state variable to the component with the following syntax:
     const [currentState, functionUsedToChangeState ] = useState([]); */
   const [movies, setMovies] = useState([]);
-/*   initial value of selectedMovie is set as null
-  const [selectedMovie, setSelectedMovie] = useState(null); */
   //initial value of user is set as storedUser. if not, null
   const [user, setUser] = useState(storedUser ? storedUser : null);
   //initial value of user is set as storedToken. if not, null
   const [token, setToken] = useState(storedToken ? storedToken : null);
 
   //fetching data from API by using useEffect hook
-  useEffect(() => {
+  useEffect(
+    () => {
       //if there's no token, doesn't proceed with the fetch operation
       if (!token) {
         return;
@@ -163,11 +162,29 @@ export const MainView = () => {
               </>
             }
           />
+
+          {/* Route for USER PROFILE view */}
+          <Route
+            path="/user"
+            element={
+              <>
+                {/* If user is not logged in, navigate to login; otherwise, render MovieView or show empty list message */}
+                {!user ? (
+                  <Navigate to="/login" replace />
+                ) : (
+                  <Col md={8}>
+                    <ProfileView />
+                  </Col>
+                )}
+              </>
+            }
+          />
         </Routes>
       </Row>
     </BrowserRouter>
   );
-}
+};
+
 //different export syntax
 /* const MainView = () => {
   ...

@@ -1,5 +1,13 @@
-import { Container, Navbar, Nav, NavDropdown, Form, Button } from "react-bootstrap";
+import {
+  Container,
+  Navbar,
+  Nav,
+  NavDropdown,
+  Form,
+  Button,
+} from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 export const NavigationBar = ({ user, onLoggedOut }) => {
   return (
@@ -38,7 +46,9 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
                 <NavDropdown title="Account" id="basic-nav-dropdown">
                   <NavDropdown.Item href="#">Username</NavDropdown.Item>
                   <NavDropdown.Divider />
-                  <NavDropdown.Item href="#">My Account</NavDropdown.Item>
+                  <NavDropdown.Item>
+                    <Link to="/user">My Account</Link>
+                  </NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item onClick={onLoggedOut}>
                     <Link to="/login">Logout</Link>
